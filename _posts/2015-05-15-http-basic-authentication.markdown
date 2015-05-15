@@ -10,7 +10,8 @@ header-img: "img/747.jpg"
 <p>Motivation: Why we need them?</p>
 <ul>
 	<li>In order to make a HTTP transation secure, we need some basic authentication (BA) mechanism</li>
-	<li>These basic authentication methods, allows a HTTP user agent to provide a user name and password while making a HTTP request</li>
+	<li>These basic authentication methods, allows a HTTP user agent to provide a user name and password while making a HTTP request
+	</li>
 </ul>
 <p>Pros:</p>
 <ul>
