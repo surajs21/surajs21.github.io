@@ -7,6 +7,56 @@ author:     "Suraj"
 header-img: "img/post-bg-01.jpg"
 ---
 
-<p>Why Cluster?</p>
-<p>How?</p>
-<p>Tricks</p>
+Basic cluster example - 
+
+var cluster = require('cluster');
+var http = require('http');
+var numCPUs = require('os').cpus().length;
+
+Round 1: A basic server which accepts incoming connection on port 8000 and has number of workers equals number of cores of CPU.
+If a worker dies, master will span a new one.
+if (cluster.isMaster) {
+  // Fork workers.
+  for (var i = 0; i < numCPUs; i++) {
+    cluster.fork();
+  }
+
+  cluster.on('exit', function(worker, code, signal) {
+    console.log('worker ' + worker.process.pid + ' died');
+    // to start a new worker
+    // cluster.fork();
+  });
+} else {
+  // Workers can share any TCP connection
+  // In this case its a HTTP server
+  http.createServer(function(req, res) {
+    res.writeHead(200);
+    res.end("hello world\n");
+  }).listen(8000);
+}
+
+// Launch
+NODE_DEBUG=cluster node basic_server.js
+
+
+Round 2) Evaluating the scheduling types.
+Technique 1) RR
+In default load blancing techniquq, rounf robin is used, where the master listens on main server port and distributes it to child.
+Steps to verify this behaviour
+ - run the above script
+ - do netstat -plant | grep 8000
+ - the result that we'll get is that master is listening on 8000 port not workers.
+ Technique 2) No scheduling
+ - add cluster.schedulingPolicy = 'none'; at the top to disable RR based scheduling.
+ - do a netstat -plant | grep 8000
+ - the result that we'll get is that master is listening on 8000 port not workers.
+
+
+
+Sequenec of events -
+
+Master calls fork();
+An event fork is transmitted
+An event online is transmitted by worker. Master also receieves this event by cluster object.
+Worker calls listen(). When it starts listining successfully, it emitts listening event. This can also be received in Master by cluster object.
+
