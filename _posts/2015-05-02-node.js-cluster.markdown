@@ -15,7 +15,7 @@ var numCPUs = require('os').cpus().length;
 
 Round 1: A basic server which accepts incoming connection on port 8000 and has number of workers equals number of cores of CPU.
 If a worker dies, master will span a new one.
-```javascript
+{% highlight javascript %}
 if (cluster.isMaster) {
   // Fork workers.
   for (var i = 0; i < numCPUs; i++) {
@@ -35,11 +35,10 @@ if (cluster.isMaster) {
     res.end("hello world\n");
   }).listen(8000);
 }
-```
-```
+{% endhighlight %}
 // Launch
 NODE_DEBUG=cluster node basic_server.js
-```
+
 
 Round 2) Evaluating the scheduling types.
 Technique 1) RR
