@@ -11,16 +11,17 @@ header-img: "img/747.jpg"
 
 var o;
 
+// Both are identical
 o = {};
 o = Object.create(Object.prototype);
 // Object.create creates an object with prototoype as Object.prototype.
-// is same as o.__proto__ = Object.prototype
+// Its same as o.__proto__ = Object.prototype
 // PS: typeof o.prototype === 'undefined' // true
 
 o = Object.create(null);
 // creates an object with null as its prototype
 
-Creating Objects with some properties.
+// Creating Objects with some properties.
 o = Object.create(Object.prototype, {
 	someProperty : {
 		value: 12,
