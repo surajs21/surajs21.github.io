@@ -42,8 +42,10 @@ SomeConstructorFn.prototype.someFunction = function(){
 	console.log('ping');
 };
 
-// PS: Every function has a prototype 'property'. Best practise is to add only the behaviours i.e. functions to a function's prototype.
-// Doing this has one more benefit, all these behavious will be created once in memory and will be shared among all the child objects.
+// PS: Every function has a prototype 'property'. Best practise is to add only 
+// the behaviours i.e. functions to a function's prototype.
+// Doing this has one more benefit, all these behavious will be created once in 
+// memory and will be shared among all the child objects.
 
 o = new SomeConstructorFn();
 o = Object.create(SomeConstructorFn.prototype);
@@ -70,12 +72,15 @@ Foo.prototype = new SomeConstructorFn();
 // Inheritence - Strawberry Flavour 
 
 function Foo() {
-	SomeConstructorFn.call(this); // call super constructor to get all the initializations made in SomeConstructorFn function.
+	// call super constructor to get all the initializations made 
+	// in SomeConstructorFn function.
+	SomeConstructorFn.call(this); 
 }
 
 Foo.prototype = Object.create(SomeConstructorFn.prototype);
 
-// Both the above approach has one small glitch. Their constructor property is wrongly set.
+// Both the above approach has one small glitch. Their constructor property 
+// is wrongly set.
 o = new Foo();
 o.constructor // SomeConstructorFn
 
@@ -83,12 +88,14 @@ o.constructor // SomeConstructorFn
 Foo.prototype.constructor = Foo;
 
 
-// PS: The instanceof operator tests presence of constructor.prototype in object's prototype 'chain'.
-// true, because: Object.getPrototypeOf(o) === Foo.prototype
+// PS: The instanceof operator tests presence of constructor.prototype 
+// in object's prototype 'chain'.
+
+// true: Object.getPrototypeOf(o) === Foo.prototype
 o instanceof Foo // true
-// true, because: Object.getPrototypeOf(Foo.prototype) === SomeConstructorFn.prototype
+// true: Object.getPrototypeOf(Foo.prototype) === SomeConstructorFn.prototype
 o instanceof SomeConstructorFn // true
-// true, because: Object.getPrototypeOf(SomeConstructorFn.prototype) === Object.prototype
+// true: Object.getPrototypeOf(SomeConstructorFn.prototype) === Object.prototype
 o instanceof Object // true
 
 
@@ -98,7 +105,9 @@ o instanceof Object // true
 // How util.inherit works??
 // It inherits the prototype methods from one constructor into another
 exports.inherits = function(ctor, superCtor) {
-  ctor.super_ = superCtor; // As an additional convenience, superConstructor will be accessible through the constructor.super_ property.
+  // As an additional convenience, superConstructor will be accessible
+  // through the constructor.super_ property.
+  ctor.super_ = superCtor; 
   ctor.prototype = Object.create(superCtor.prototype, {
     constructor: {
       value: ctor,
@@ -110,10 +119,13 @@ exports.inherits = function(ctor, superCtor) {
 };
 
 function Foo(){
-	SomeConstructorFn.call(this); // add all the initializations done in SomeConstructorFn; namely someProperty
+	// add all the initializations done in SomeConstructorFn; namely someProperty
+	SomeConstructorFn.call(this); 
 }
 
-util.inherits(Foo, SomeConstructorFn); // copies all the behaviours-/ethods/functions from SomeConstructorFn constructos's prototype; namely someFunction
+ // copies all the behaviours-/ethods/functions from SomeConstructorFn
+ // constructos's prototype; namely someFunction
+util.inherits(Foo, SomeConstructorFn);
 
 o = new Foo();
 o.constructor // Foo
@@ -121,8 +133,10 @@ o.constructor // Foo
 
 // A word on Mixins
 // To inherit from multiple objects, mixins are a possibility.
-// The mixin function would copy the functions from the superclass prototype to the subclass prototype,
-// the mixin function needs to be supplied by the user. An example of a mixin like function would be jQuery.extend()
+// The mixin function would copy the functions from the superclass prototype to
+//  the subclass prototype,
+// the mixin function needs to be supplied by the user. An example of a mixin 
+//  like function would be jQuery.extend()
 
 // Why not to use Mixins
 
