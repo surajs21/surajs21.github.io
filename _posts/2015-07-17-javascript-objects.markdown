@@ -126,12 +126,10 @@ o.constructor // Foo
 
 // Why not to use Mixins
 
-{% endhighlight %}
+
 
 // References - 
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
-https://developer.mozilla.org/en-US/docs/Glossary/Mixin
-
-
-
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
+// https://developer.mozilla.org/en-US/docs/Glossary/Mixin
+{% endhighlight %}
