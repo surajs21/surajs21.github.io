@@ -120,8 +120,8 @@ exports.inherits = function(ctor, superCtor) {
 };
 
 function Foo(){
-	// add all the initializations done in SomeConstructorFn; namely someProperty
-	SomeConstructorFn.call(this); 
+	// SomeConstructorFn.call(this); Not required, that's one of the benefit,
+	// we need not use the ancestor's name.
 }
 
  // copies all the behaviours-/ethods/functions from SomeConstructorFn
@@ -134,17 +134,25 @@ o.constructor // Foo
 
 // A word on Mixins
 // To inherit from multiple objects, mixins are a possibility.
-// The mixin function would copy the functions from the superclass prototype to
+// The mixin function would copy the functions and properties from the superclass prototype to
 //  the subclass prototype,
 // the mixin function needs to be supplied by the user. An example of a mixin 
 //  like function would be jQuery.extend()
 
-// Why not to use Mixins
+function extend(destination, source) {
+  for (var k in source) {
+    if (source.hasOwnProperty(k)) {
+      destination[k] = source[k];
+    }
+  }
+  return destination; 
+}
 
-
+extend(Foo.prototype, SomeConstructorFn);
 
 // References - 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof
 // https://developer.mozilla.org/en-US/docs/Glossary/Mixin
+// http://bob.yexley.net/dry-javascript-with-mixins/
 {% endhighlight %}
